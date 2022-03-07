@@ -1,1 +1,1 @@
-print("hightscore")
+print("hightscore test")
