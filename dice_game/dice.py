@@ -6,5 +6,5 @@ class Dice:
         random.seed()
 
     def roll_dice():
-        rm = random.randrange(1, 6)
-        print("random is "+rm)
+        rmd = random.randrange(1, 6)
+        print("random is "+rmd)
