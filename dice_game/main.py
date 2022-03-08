@@ -28,7 +28,7 @@ def main():
         player1_score += 25
         
         if player_turn == 0:
-
+            print()
 
 
 
