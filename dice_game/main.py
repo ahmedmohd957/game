@@ -1,5 +1,6 @@
 import sys
 import player
+import dice
 
 def main():
     
@@ -25,10 +26,23 @@ def main():
     print(p2.name)
 
     while player1_score < 100 and player2_score < 100:
-        player1_score += 25
         
         if player_turn == 0:
-            print()
+            die = dice.Dice()
+            roll = die.roll_dice()
+            print(roll)
+
+            if roll != 1:
+                hold = input("Do you want to hold (y/n): ")
+                if hold == "y":
+                    player1_score += roll
+                    player_turn = 1
+                    continue
+                else:
+                    print("continue")
+        
+        else:
+            print("Player 2 turn")
 
 
 
