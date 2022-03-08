@@ -1,10 +1,10 @@
 
 import random
 
+class Intelligence:
+    
+    def level_1(self):
+        return random.randrange(0, 1)
 
-class Intelligence():
-    def level1():
-        return random.randrange(1, 3)
-
-    def level2():
-        return 2
+    def level_2(self):
+        return 0
