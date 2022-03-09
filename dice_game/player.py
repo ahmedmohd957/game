@@ -11,4 +11,4 @@ class Player:
 
     def updateName(self):
         self.name = input(f"\n({self.name}) Enter a new name: ")
-        print(f"Name successfully changed to {self.name}")
+        print(f"Name successfully changed to {self.name}\n")

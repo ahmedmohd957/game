@@ -24,6 +24,9 @@ class Shell(cmd.Cmd):
     
     def do_score(self, _):
         print("score")
+
+    def do_change_level(self, _):
+        self.game.change_game_level()
     
     def do_change_name(self, _):
         self.game.change_player_name()

@@ -128,6 +128,7 @@ class Game:
         else:
             return self.p2.name
     
+    
     def change_player_name(self):
         if self.p1 and self.p2:
             if self.number_of_players == 1:
@@ -139,5 +140,18 @@ class Game:
                 else:
                     self.p2.updateName()
         else:
-            print("You haven't started the game yet!")
+            print("You haven't started the game yet!\n")
 
+
+    def change_game_level(self):
+        if self.p1 and self.p2:
+            if self.number_of_players == 1:
+                print(f"Current level is {self.level_of_intelligence}.")
+                val = input("Do you wish to change the  level? (y/n): ")
+                if val == "y":
+                    self.level_of_intelligence = int(input("\nChoose level of difficulty (1/2): "))
+                    print(f"Level of difficulty successfully changed to {self.level_of_intelligence}.\n")
+            else:
+                print("This setting is only configurable when playing towards a computer!\n")
+        else:
+            print("You haven't started the game yet!\n")
