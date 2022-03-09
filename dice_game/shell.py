@@ -19,11 +19,14 @@ class Shell(cmd.Cmd):
         if self.game.score_below_100() is not True:
             print(f'{self.game.get_winner()} is the winner!!!')
     
-    def do_change_name(self, _):
-        print("change name")
-    
     def do_cheat(self, _):
         print("cheat")
+    
+    def do_score(self, _):
+        print("score")
+    
+    def do_change_name(self, _):
+        self.game.change_player_name()
 
     def do_exit(self, _):
         return True

@@ -127,3 +127,17 @@ class Game:
             return self.p1.name
         else:
             return self.p2.name
+    
+    def change_player_name(self):
+        if self.p1 and self.p2:
+            if self.number_of_players == 1:
+                self.p1.updateName()
+            else:
+                plyr = int(input("Choose player (1/2): "))
+                if plyr == 1:
+                    self.p1.updateName()
+                else:
+                    self.p2.updateName()
+        else:
+            print("You haven't started the game yet!")
+
