@@ -173,6 +173,9 @@ class Game:
     
     def cheat(self):
         if self.p1 and self.p2:
+            if self.number_of_players == 2:
+                print("Cheating is only available when you're playing against a computer.\n")
+                return
             self.is_cheating = True
             print("Cheating... Computer will get a \"1\" in the next round.\n")
         else:
