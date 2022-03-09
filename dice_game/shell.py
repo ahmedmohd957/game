@@ -16,12 +16,11 @@ class Shell(cmd.Cmd):
     
     def do_roll(self, _):
         self.game.roll()
-        
         if self.game.score_below_100() is not True:
             print(f'{self.game.get_winner()} is the winner!!!')
     
     def do_cheat(self, _):
-        print("cheat")
+        self.game.cheat()
     
     def do_score(self, _):
         self.game.get_highscore()

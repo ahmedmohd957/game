@@ -1,3 +1,4 @@
+from turtle import Turtle
 import player
 import dice
 import intelligence
@@ -10,6 +11,7 @@ class Game:
     player2_score = 0
     player_turn = 0
     level_of_intelligence = 0
+    is_cheating = False
 
     p1 = None
     p2 = None
@@ -33,22 +35,18 @@ class Game:
     def roll(self):
         die = dice.Dice()
         roll = die.roll_dice()
-        print(f"\n{self.p1.name if self.player_turn == 0 else self.p2.name}'s rolling the dice, it was a {roll}")
 
         if self.player_turn == 0:
-            
+            print(f"\n{self.p1.name}'s rolling the dice, it was a {roll}")
             if roll != 1:
                 hold = input(f'({self.p1.name}) Do you want to hold? (y/n): ')
-                
                 if hold == "y":
                     self.hold(roll)
-
                     if self.number_of_players == 1 and self.score_below_100():
                         self.roll()
                 else:
                     self.player1_score += roll
                     print(f'({self.p1.name}) Score : {self.player1_score}\n')
-
             else:
                 self.player1_score = 0
                 self.player_turn = 1
@@ -56,15 +54,13 @@ class Game:
                 
                 if self.number_of_players == 1 and self.score_below_100():
                     self.roll()
-        
         elif self.player_turn == 1:
-
             if self.number_of_players == 1:
                 self.computer(roll)
             else:
+                print(f"\n{self.p2.name}'s rolling the dice, it was a {roll}")
                 if roll != 1:
                     hold = input(f'({self.p2.name}) Do you want to hold? (y/n): ')
-
                     if hold == "y":
                         self.hold(roll)
                     else:
@@ -77,6 +73,12 @@ class Game:
 
 
     def computer(self, roll):
+        if self.is_cheating:
+            roll = 1
+            self.is_cheating = False
+
+        print(f"\n{self.p2.name}'s rolling the dice, it was a {roll}")
+
         if roll != 1:
             hold = ["y", "n", "n"]
             index = 0
@@ -165,5 +167,13 @@ class Game:
             current_scores = [self.player1_score, self.player2_score]
             total_scores = [self.p1.score, self.p2.score]
             h_score.get_highScore(players, current_scores, total_scores)
+        else:
+            print("You haven't started the game yet!\n")
+
+    
+    def cheat(self):
+        if self.p1 and self.p2:
+            self.is_cheating = True
+            print("Cheating... Computer will get a \"1\" in the next round.\n")
         else:
             print("You haven't started the game yet!\n")
