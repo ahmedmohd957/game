@@ -14,7 +14,13 @@ class Shell(cmd.Cmd):
         print("\nNow you're ready to roll the dice\n")
     
     def do_roll(self, _):
-        self.game.roll_test()
+        self.game.roll()
+        
+        if self.game.score_below_100() is not True:
+            print(f'{self.game.get_winner()} is the winner!!!')
+    
+    def do_change_name(self, _):
+        print("change name")
     
     def do_cheat(self, _):
         print("cheat")

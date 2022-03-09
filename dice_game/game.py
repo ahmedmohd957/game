@@ -29,7 +29,7 @@ class Game:
             self.p2.setName(False)
 
 
-    def roll_test(self):
+    def roll(self):
         die = dice.Dice()
         roll = die.roll_dice()
         print(f"\n{self.p1.name if self.player_turn == 0 else self.p2.name}'s rolling the dice, it was a {roll}")
@@ -41,37 +41,63 @@ class Game:
                 
                 if hold == "y":
                     self.hold(roll)
-                    self.computer(die)
 
+                    if self.number_of_players == 1 and self.score_below_100():
+                        self.roll()
                 else:
                     self.player1_score += roll
-                    print(f'({self.p1.name}) Current Score : {self.player1_score}')
-                    print(f'({self.p1.name}) Total Score : {self.p1.score}\n')
+                    print(f'({self.p1.name}) Score : {self.player1_score}\n')
 
             else:
                 self.player1_score = 0
                 self.player_turn = 1
-                print(f'({self.p1.name}) Total Score : {self.p1.score}\n')
+                print(f'({self.p1.name}) Total score : {self.p1.score}\n')
                 
-                # Computer
-                self.computer(die)
+                if self.number_of_players == 1 and self.score_below_100():
+                    self.roll()
         
         elif self.player_turn == 1:
-            
-            if roll != 1:
+
+            if self.number_of_players == 1:
+                self.computer(roll)
+            else:
+                if roll != 1:
                     hold = input(f'({self.p2.name}) Do you want to hold? (y/n): ')
 
                     if hold == "y":
                         self.hold(roll)
                     else:
                         self.player2_score += roll
-                        print(f'({self.p2.name}) Current Score : {self.player2_score}')
-                        print(f'({self.p2.name}) Total Score : {self.p2.score}\n')
-            else:
-                self.player2_score = 0
-                self.player_turn = 0
-                print(f'({self.p2.name}) Total Score : {self.p2.score}\n')
+                        print(f'({self.p2.name}) Score : {self.player2_score}\n')
+                else:
+                    self.player2_score = 0
+                    self.player_turn = 0
+                    print(f'({self.p2.name}) Total score : {self.p2.score}\n')
 
+
+    def computer(self, roll):
+        if roll != 1:
+            hold = ["y", "n", "n"]
+            index = 0
+            
+            intel = intelligence.Intelligence()
+            if self.level_of_intelligence == 1:
+                index = intel.level_1()
+            elif self.level_of_intelligence == 2:
+                index = intel.level_2()
+            
+            if hold[index] == "y":
+                print('Computer chose to "hold"')
+                self.hold(roll)
+            else:
+                self.player2_score += roll
+                print('Computer chose to "continue"')
+                print(f'({self.p2.name}) Score : {self.player2_score}\n')
+                self.roll()
+        else:
+            self.player2_score = 0
+            self.player_turn = 0
+            print(f'({self.p2.name}) Total score : {self.p2.score}\n')
 
 
     def hold(self, roll):
@@ -80,137 +106,24 @@ class Game:
             self.p1.score += self.player1_score
             self.player1_score = 0
             self.player_turn = 1
-            print(f'({self.p1.name}) Total Score : {self.p1.score}\n')
+            print(f'({self.p1.name}) Total score : {self.p1.score}\n')
         else:
             self.player2_score += roll
             self.p2.score += self.player2_score
             self.player2_score = 0
             self.player_turn = 0
-            print(f'({self.p2.name}) Total Score : {self.p2.score}\n')
+            print(f'({self.p2.name}) Total score : {self.p2.score}\n')
 
 
-    def computer(self, die):
-            self.player_turn = 1
-            roll = die.roll_dice()
-            print(f"\n{self.p1.name if self.player_turn == 0 else self.p2.name}'s rolling the dice, it was a {roll}")
-
-            if roll != 1:
-                hold = ["y", "n"]
-                index = 0
-                
-                intel = intelligence.Intelligence()
-                if self.level_of_intelligence == 1:
-                    index = intel.level_1()
-                elif self.level_of_intelligence == 2:
-                    index = intel.level_2()
-                
-                if hold[index] == "y":
-                    print("Computer chose to hold")
-                    self.hold(roll)
-                else:
-                    self.player2_score += roll
-                    print("Computer chose to continue")
-                    print(f'({self.p2.name}) Current Score : {self.player2_score}')
-                    print(f'({self.p2.name}) Total Score : {self.p2.score}\n')
-            else:
-                self.player2_score = 0
-                self.player_turn = 0
-                print(f'({self.p2.name}) Total Score : {self.p2.score}\n')
+    def score_below_100(self):
+        if self.p1.score < 100 and self.p2.score < 100:
+            return True
+        else:
+            return False
 
 
-
-
-    # def roll(self):
-    #     while self.p1.score < 100 and self.p2.score < 100:
-            
-    #         print("\n-------------------------")
-    #         print(f"{self.p1.name if self.player_turn == 0 else self.p2.name}'s turn")
-    #         print("-------------------------\n")
-
-    #         die = dice.Dice()
-    #         roll = die.roll_dice()
-    #         print(f"Rolling the dice, it was a {roll}")
-
-    #         if self.player_turn == 0:
-
-    #             if roll != 1:
-    #                 hold = input(f'({self.p1.name}) Do you want to hold? (y/n): ')
-                    
-    #                 if hold == "y":
-    #                     self.player1_score += roll
-    #                     self.p1.score += self.player1_score
-    #                     self.player1_score = 0
-    #                     self.player_turn = 1
-    #                     print(f'({self.p1.name}) Total Score : {self.p1.score}')
-    #                     continue
-    #                 else:
-    #                     self.player1_score += roll
-    #                     print(f'({self.p1.name}) Current Score : {self.player1_score}')
-    #                     continue
-
-    #             else:
-    #                 self.player1_score = 0
-    #                 self.player_turn = 1
-    #                 print(f'({self.p1.name}) Total Score : {self.p1.score}')
-    #                 continue
-                
-    #         elif self.player_turn == 1:
-
-    #             if self.number_of_players == 2:
-                    
-    #                 if roll != 1:
-    #                     hold = input(f'({self.p2.name}) Do you want to hold? (y/n): ')
-                        
-    #                     if hold == "y":
-    #                         self.player2_score += roll
-    #                         self.p2.score += self.player2_score
-    #                         self.player2_score = 0
-    #                         self.player_turn = 0
-    #                         print(f'({self.p2.name}) Total Score : {self.p2.score}')
-    #                         continue
-    #                     else:
-    #                         self.player2_score += roll
-    #                         print(f'({self.p2.name}) Current Score : {self.player2_score}')
-    #                         print(f'({self.p2.name}) Total Score : {self.p2.score}')
-    #                         continue
-    #                 else:
-    #                     self.player2_score = 0
-    #                     self.player_turn = 0
-    #                     print(f'({self.p2.name}) Total Score : {self.p2.score}')
-    #                     continue
-                    
-    #             else:
-
-    #                 if roll != 1:
-    #                     hold = ["y", "n"]
-    #                     index = 0
-                        
-    #                     intel = intelligence.Intelligence()
-    #                     if self.level_of_intelligence == 1:
-    #                         index = intel.level_1()
-    #                     elif self.level_of_intelligence == 2:
-    #                         index = intel.level_2()
-                        
-    #                     if hold[index] == "y":
-    #                         self.player2_score += roll
-    #                         self.p2.score += self.player2_score
-    #                         self.player2_score = 0
-    #                         self.player_turn = 0
-    #                         print(f'({self.p2.name}) Total Score : {self.p2.score}')
-    #                         continue
-    #                     else:
-    #                         self.player2_score += roll
-    #                         print(f'({self.p2.name}) Current Score : {self.player2_score}')
-    #                         print(f'({self.p2.name}) Total Score : {self.p2.score}')
-    #                         continue
-    #                 else:
-    #                     self.player2_score = 0
-    #                     self.player_turn = 0
-    #                     print(f'({self.p2.name}) Total Score : {self.p2.score}')
-    #                     continue
-
-    #     else:
-    #         if self.p1.score >= 100:        
-    #             print(f'\n{self.p1.name} is the winner!\n')
-    #         else:
-    #             print(f'\n{self.p2.name} is the winner!\n')
+    def get_winner(self):
+        if self.p1.score >= 100:
+            return self.p1.name
+        else:
+            return self.p2.name
