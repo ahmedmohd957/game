@@ -11,9 +11,10 @@ class Shell(cmd.Cmd):
     
     def do_start(self, _):
         self.game.start()
+        print("\nNow you're ready to roll the dice\n")
     
     def do_roll(self, _):
-        self.game.roll()
+        self.game.roll_test()
     
     def do_cheat(self, _):
         print("cheat")
