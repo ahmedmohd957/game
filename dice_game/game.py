@@ -1,6 +1,7 @@
 import player
 import dice
 import intelligence
+import highscore
 
 class Game:
 
@@ -128,7 +129,7 @@ class Game:
         else:
             return self.p2.name
     
-    
+
     def change_player_name(self):
         if self.p1 and self.p2:
             if self.number_of_players == 1:
@@ -153,5 +154,16 @@ class Game:
                     print(f"Level of difficulty successfully changed to {self.level_of_intelligence}.\n")
             else:
                 print("This setting is only configurable when playing towards a computer!\n")
+        else:
+            print("You haven't started the game yet!\n")
+
+
+    def get_highscore(self):
+        if self.p1 and self.p2:
+            h_score = highscore.HighScore()
+            players = [self.p1.name, self.p2.name]
+            current_scores = [self.player1_score, self.player2_score]
+            total_scores = [self.p1.score, self.p2.score]
+            h_score.get_highScore(players, current_scores, total_scores)
         else:
             print("You haven't started the game yet!\n")

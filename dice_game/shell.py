@@ -11,7 +11,8 @@ class Shell(cmd.Cmd):
     
     def do_start(self, _):
         self.game.start()
-        print("\nNow you're ready to roll the dice\n")
+        print("\nNow you're ready to roll the dice")
+        print("Enter \"roll\" to roll the dice.\n")
     
     def do_roll(self, _):
         self.game.roll()
@@ -23,7 +24,7 @@ class Shell(cmd.Cmd):
         print("cheat")
     
     def do_score(self, _):
-        print("score")
+        self.game.get_highscore()
 
     def do_change_level(self, _):
         self.game.change_game_level()
