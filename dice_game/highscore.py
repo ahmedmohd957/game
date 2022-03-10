@@ -1,6 +1,7 @@
 from dis import pretty_flags
 from prettytable import PrettyTable
 
+
 class HighScore:
 
     def get_highScore(self, players, current_scores, total_scores):
