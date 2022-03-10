@@ -1,4 +1,4 @@
-from turtle import Turtle
+from multiprocessing.sharedctypes import Value
 import player
 import dice
 import intelligence
@@ -6,30 +6,40 @@ import highscore
 
 class Game:
 
-    number_of_players = 0
+    number_of_players = 1
     player1_score = 0
     player2_score = 0
     player_turn = 0
-    level_of_intelligence = 0
+    level_of_intelligence = 1
     is_cheating = False
 
     p1 = None
     p2 = None
 
     def start(self):
-        self.number_of_players = int(input("\nEnter number of players (1/2): "))
+        try:
+            self.number_of_players = int(input("\nEnter number of players (1/2): "))
+            if self.number_of_players < 1 or self.number_of_players > 2:
+                raise ValueError
+
+            if self.number_of_players == 1:
+                self.level_of_intelligence = int(input("\nChoose level of difficulty (1/2): "))
+                if self.level_of_intelligence < 1 or self.level_of_intelligence > 2:
+                    raise ValueError
+        except ValueError:
+            raise ValueError("Choose between '1' or '2'. Start the game again.")
 
         self.p1 = player.Player()
-        self.p1.setName(True)
+        self.p1.setName(1)
 
-        if self.number_of_players == 1:
-            self.p2 = player.Player()
-            self.p2.name = "Computer"
-            self.level_of_intelligence = int(input("\nChoose level of difficulty (1/2): "))
-
+        self.p2 = player.Player()
         if self.number_of_players == 2:
-            self.p2 = player.Player()
-            self.p2.setName(False)
+            self.p2.setName(2)
+        else:
+            self.p2.name = "Computer"
+        
+        if self.p1.name == "" or self.p2.name == "":
+            raise ValueError("Name cannot be empty. Start the game again.")
 
 
     def roll(self):
@@ -72,6 +82,41 @@ class Game:
                     print(f'({self.p2.name}) Total score : {self.p2.score}\n')
 
 
+
+    def test(self, roll):
+        if self.player_turn == 1 and self.number_of_players == 1:
+            self.computer(roll)
+            return
+
+        if roll != 1:
+            hold = input(f'Do you want to hold? (y/n): ')
+            if hold == "y":
+                self.hold(roll)
+                if self.player_turn == 0 and self.number_of_players == 1:
+                    if self.score_below_100():
+                        self.roll()
+            else:
+                if self.player_turn == 0:
+                    self.player1_score += roll
+                    print(f'({self.p1.name}) Score : {self.player1_score}\n')
+                else:
+                    self.player2_score += roll
+                    print(f'({self.p2.name}) Score : {self.player2_score}\n')
+        else:
+            if self.player_turn == 0:
+                self.player1_score = 0
+                self.player_turn = 1
+                print(f'({self.p1.name}) Total score : {self.p1.score}\n')
+                if self.number_of_players == 1 and self.score_below_100():
+                    self.roll()
+            else:
+                self.player2_score = 0
+                self.player_turn = 0
+                print(f'({self.p2.name}) Total score : {self.p2.score}\n')
+            
+
+
+    
     def computer(self, roll):
         if self.is_cheating:
             roll = 1

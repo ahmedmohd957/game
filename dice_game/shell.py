@@ -10,9 +10,12 @@ class Shell(cmd.Cmd):
         self.game = game.Game()
     
     def do_start(self, _):
-        self.game.start()
-        print("\nNow you're ready to roll the dice")
-        print("Enter \"roll\" to roll the dice.\n")
+        try:
+            self.game.start()
+            print("\nNow you're ready to roll the dice")
+            print("Enter \"roll\" to roll the dice.\n")
+        except Exception as error:
+            print(error)
     
     def do_roll(self, _):
         self.game.roll()
