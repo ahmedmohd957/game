@@ -17,6 +17,7 @@ class Game:
     p2 = None
 
     def start(self):
+        """Starts the game"""
         try:
             self.number_of_players = int(input("\nEnter number of players (1/2): "))
             if self.number_of_players < 1 or self.number_of_players > 2:
@@ -42,6 +43,7 @@ class Game:
             raise ValueError("Name cannot be empty. Start the game again.")
 
     def roll(self):
+        """Player rolls the dice and chooses wheather to hold or continue."""
         die = dice.Dice()
         roll = die.roll_dice()
 
@@ -84,6 +86,7 @@ class Game:
                 print(f'({self.p2.name}) Total score : {self.p2.score}\n')
 
     def computer(self, roll):
+        """Computer's turn to play"""
         if roll != 1:
             intel = intelligence.Intelligence()
             if self.level_of_intelligence == 1:
@@ -105,6 +108,7 @@ class Game:
             print(f'({self.p2.name}) Total score : {self.p2.score}\n')
 
     def hold(self, roll):
+        """Hold the rolled die."""
         if self.player_turn == 0:
             self.player1_score += roll
             self.p1.score += self.player1_score
@@ -119,30 +123,37 @@ class Game:
             print(f'({self.p2.name}) Total score : {self.p2.score}\n')
 
     def player_1_turn(self):
+        """Returns if current player is Player 1."""
         return self.player_turn == 0
     
     def player_2_turn(self):
+        """Returns if current player is Player 2."""
         return self.player_turn == 1
     
     def one_player(self):
+        """Returns if the game is played by 1 player."""
         return self.number_of_players == 1
     
     def computer_turn(self):
+        """Return if it's computer's turn."""
         return self.player_2_turn() and self.one_player()
 
     def score_below_100(self):
+        """Checks if score is under 100"""
         if self.p1.score < 100 and self.p2.score < 100:
             return True
         else:
             return False
 
     def get_winner(self):
+        """Return the name of the winner player."""
         if self.p1.score >= 100:
             return self.p1.name
         else:
             return self.p2.name
 
     def change_player_name(self):
+        """Changed the name of the chosen player."""
         if self.p1 and self.p2:
             if self.number_of_players == 1:
                 self.p1.updateName()
@@ -156,6 +167,7 @@ class Game:
             print("You haven't started the game yet!\n")
 
     def change_game_level(self):
+        """Changes the games level of intelligence"""
         if self.p1 and self.p2:
             if self.number_of_players == 1:
                 print(f"Current level is {self.level_of_intelligence}.")
@@ -169,6 +181,7 @@ class Game:
             print("You haven't started the game yet!\n")
 
     def get_highscore(self):
+        """Represents the highscore of the current game."""
         if self.p1 and self.p2:
             h_score = highscore.HighScore()
             players = [self.p1.name, self.p2.name]
@@ -179,6 +192,7 @@ class Game:
             print("You haven't started the game yet!\n")
 
     def cheat(self):
+        """Activates cheat"""
         if self.p1 and self.p2:
             if self.number_of_players == 2:
                 print("Cheating is only available when you're playing against a computer.\n")

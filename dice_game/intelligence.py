@@ -4,10 +4,10 @@ import random
 class Intelligence:
     
     def level_1(self):
-        """rolls the dice"""
+        """Computer randomly chooses whether to hold or continue."""
         hold = ["y", "n", "n"]
         return hold[random.randrange(0, 2)]
 
     def level_2(self):
-        """rolls the dice"""
+        """Computer holds every round."""
         return "y"
