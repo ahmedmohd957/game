@@ -41,50 +41,20 @@ class Game:
         if self.p1.name == "" or self.p2.name == "":
             raise ValueError("Name cannot be empty. Start the game again.")
 
-
     def roll(self):
         die = dice.Dice()
         roll = die.roll_dice()
 
-        if self.player_turn == 0:
+        if self.computer_turn() and self.is_cheating:
+            roll = 1
+            self.is_cheating = False
+
+        if self.player_1_turn():
             print(f"\n{self.p1.name}'s rolling the dice, it was a {roll}")
-            if roll != 1:
-                hold = input(f'({self.p1.name}) Do you want to hold? (y/n): ')
-                if hold == "y":
-                    self.hold(roll)
-                    if self.number_of_players == 1 and self.score_below_100():
-                        self.roll()
-                else:
-                    self.player1_score += roll
-                    print(f'({self.p1.name}) Score : {self.player1_score}\n')
-            else:
-                self.player1_score = 0
-                self.player_turn = 1
-                print(f'({self.p1.name}) Total score : {self.p1.score}\n')
-                
-                if self.number_of_players == 1 and self.score_below_100():
-                    self.roll()
-        elif self.player_turn == 1:
-            if self.number_of_players == 1:
-                self.computer(roll)
-            else:
-                print(f"\n{self.p2.name}'s rolling the dice, it was a {roll}")
-                if roll != 1:
-                    hold = input(f'({self.p2.name}) Do you want to hold? (y/n): ')
-                    if hold == "y":
-                        self.hold(roll)
-                    else:
-                        self.player2_score += roll
-                        print(f'({self.p2.name}) Score : {self.player2_score}\n')
-                else:
-                    self.player2_score = 0
-                    self.player_turn = 0
-                    print(f'({self.p2.name}) Total score : {self.p2.score}\n')
+        else:
+            print(f"\n{self.p2.name}'s rolling the dice, it was a {roll}")
 
-
-
-    def test(self, roll):
-        if self.player_turn == 1 and self.number_of_players == 1:
+        if self.computer_turn():
             self.computer(roll)
             return
 
@@ -92,38 +62,28 @@ class Game:
             hold = input(f'Do you want to hold? (y/n): ')
             if hold == "y":
                 self.hold(roll)
-                if self.player_turn == 0 and self.number_of_players == 1:
-                    if self.score_below_100():
-                        self.roll()
+                if self.one_player() and self.score_below_100():
+                    self.roll()
             else:
-                if self.player_turn == 0:
+                if self.player_1_turn():
                     self.player1_score += roll
                     print(f'({self.p1.name}) Score : {self.player1_score}\n')
                 else:
                     self.player2_score += roll
                     print(f'({self.p2.name}) Score : {self.player2_score}\n')
         else:
-            if self.player_turn == 0:
+            if self.player_1_turn():
                 self.player1_score = 0
                 self.player_turn = 1
                 print(f'({self.p1.name}) Total score : {self.p1.score}\n')
-                if self.number_of_players == 1 and self.score_below_100():
+                if self.one_player() and self.score_below_100():
                     self.roll()
             else:
                 self.player2_score = 0
                 self.player_turn = 0
                 print(f'({self.p2.name}) Total score : {self.p2.score}\n')
-            
 
-
-    
     def computer(self, roll):
-        if self.is_cheating:
-            roll = 1
-            self.is_cheating = False
-
-        print(f"\n{self.p2.name}'s rolling the dice, it was a {roll}")
-
         if roll != 1:
             hold = ["y", "n", "n"]
             index = 0
@@ -147,7 +107,6 @@ class Game:
             self.player_turn = 0
             print(f'({self.p2.name}) Total score : {self.p2.score}\n')
 
-
     def hold(self, roll):
         if self.player_turn == 0:
             self.player1_score += roll
@@ -162,6 +121,17 @@ class Game:
             self.player_turn = 0
             print(f'({self.p2.name}) Total score : {self.p2.score}\n')
 
+    def player_1_turn(self):
+        return self.player_turn == 0
+    
+    def player_2_turn(self):
+        return self.player_turn == 1
+    
+    def one_player(self):
+        return self.number_of_players == 1
+    
+    def computer_turn(self):
+        return self.player_2_turn() and self.one_player()
 
     def score_below_100(self):
         if self.p1.score < 100 and self.p2.score < 100:
@@ -169,13 +139,11 @@ class Game:
         else:
             return False
 
-
     def get_winner(self):
         if self.p1.score >= 100:
             return self.p1.name
         else:
             return self.p2.name
-    
 
     def change_player_name(self):
         if self.p1 and self.p2:
@@ -190,7 +158,6 @@ class Game:
         else:
             print("You haven't started the game yet!\n")
 
-
     def change_game_level(self):
         if self.p1 and self.p2:
             if self.number_of_players == 1:
@@ -204,7 +171,6 @@ class Game:
         else:
             print("You haven't started the game yet!\n")
 
-
     def get_highscore(self):
         if self.p1 and self.p2:
             h_score = highscore.HighScore()
@@ -215,7 +181,6 @@ class Game:
         else:
             print("You haven't started the game yet!\n")
 
-    
     def cheat(self):
         if self.p1 and self.p2:
             if self.number_of_players == 2:

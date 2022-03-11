@@ -14,8 +14,8 @@ class Shell(cmd.Cmd):
             self.game.start()
             print("\nNow you're ready to roll the dice")
             print("Enter \"roll\" to roll the dice.\n")
-        except Exception as error:
-            print(error)
+        except ValueError as err:
+            print(err)
     
     def do_roll(self, _):
         self.game.roll()
