@@ -13,9 +13,9 @@ class TestPlayer(unittest.TestCase):
         self.assertIsInstance(object, Player, message)
 
     def setUp(self):
-        # self.p1 = Player.setName(True)
+        # Set name for the player
         self.name = Player.name = "cuz"
-        self.updated_name = Player.updateName = self.name
+        self.updated_name = Player.update_name = self.name
 
     def test_player_name(self):
         """Test if the name exist"""

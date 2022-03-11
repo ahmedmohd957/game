@@ -1,6 +1,5 @@
 """This class represents the game."""
 
-from multiprocessing.sharedctypes import Value
 import player
 import dice
 import intelligence
@@ -16,8 +15,8 @@ class Game:
     player_turn = 0
     level_of_intelligence = 1
     is_cheating = False
-    p1 = None
-    p2 = None
+    p_1 = None
+    p_2 = None
 
     def start(self):
         """Starts the game"""
@@ -35,16 +34,16 @@ class Game:
         except ValueError:
             raise ValueError("Choose between '1' or '2'. Start the game again.")
 
-        self.p1 = player.Player()
-        self.p1.setName(1)
+        self.p_1 = player.Player()
+        self.p_1.set_name(1)
 
-        self.p2 = player.Player()
+        self.p_2 = player.Player()
         if self.number_of_players == 2:
-            self.p2.setName(2)
+            self.p_2.set_name(2)
         else:
-            self.p2.name = "Computer"
+            self.p_2.name = "Computer"
 
-        if self.p1.name == "" or self.p2.name == "":
+        if self.p_1.name == "" or self.p_2.name == "":
             raise ValueError("Name cannot be empty. Start the game again.")
 
     def roll(self):
@@ -57,16 +56,16 @@ class Game:
             self.is_cheating = False
 
         if self.player_1_turn():
-            print(f"\n{self.p1.name}'s rolling the dice, it was a {roll}")
+            print(f"\n{self.p_1.name}'s rolling the dice, it was a {roll}")
         else:
-            print(f"\n{self.p2.name}'s rolling the dice, it was a {roll}")
+            print(f"\n{self.p_2.name}'s rolling the dice, it was a {roll}")
 
         if self.computer_turn():
             self.computer(roll)
             return
 
         if roll != 1:
-            hold = input(f"Do you want to hold? (y/n): ")
+            hold = input("Do you want to hold? (y/n): ")
             if hold == "y":
                 self.hold(roll)
                 if self.one_player() and self.score_below_100():
@@ -74,21 +73,21 @@ class Game:
             else:
                 if self.player_1_turn():
                     self.player1_score += roll
-                    print(f"({self.p1.name}) Score : {self.player1_score}\n")
+                    print(f"({self.p_1.name}) Score : {self.player1_score}\n")
                 else:
                     self.player2_score += roll
-                    print(f"({self.p2.name}) Score : {self.player2_score}\n")
+                    print(f"({self.p_2.name}) Score : {self.player2_score}\n")
         else:
             if self.player_1_turn():
                 self.player1_score = 0
                 self.player_turn = 1
-                print(f"({self.p1.name}) Total score : {self.p1.score}\n")
+                print(f"({self.p_1.name}) Total score : {self.p_1.score}\n")
                 if self.one_player() and self.score_below_100():
                     self.roll()
             else:
                 self.player2_score = 0
                 self.player_turn = 0
-                print(f"({self.p2.name}) Total score : {self.p2.score}\n")
+                print(f"({self.p_2.name}) Total score : {self.p_2.score}\n")
 
     def computer(self, roll):
         """Computer's turn to play"""
@@ -105,27 +104,27 @@ class Game:
             else:
                 self.player2_score += roll
                 print('Computer chose to "continue"')
-                print(f"({self.p2.name}) Score : {self.player2_score}\n")
+                print(f"({self.p_2.name}) Score : {self.player2_score}\n")
                 self.roll()
         else:
             self.player2_score = 0
             self.player_turn = 0
-            print(f"({self.p2.name}) Total score : {self.p2.score}\n")
+            print(f"({self.p_2.name}) Total score : {self.p_2.score}\n")
 
     def hold(self, roll):
         """Hold the rolled die."""
         if self.player_turn == 0:
             self.player1_score += roll
-            self.p1.score += self.player1_score
+            self.p_1.score += self.player1_score
             self.player1_score = 0
             self.player_turn = 1
-            print(f"({self.p1.name}) Total score : {self.p1.score}\n")
+            print(f"({self.p_1.name}) Total score : {self.p_1.score}\n")
         else:
             self.player2_score += roll
-            self.p2.score += self.player2_score
+            self.p_2.score += self.player2_score
             self.player2_score = 0
             self.player_turn = 0
-            print(f"({self.p2.name}) Total score : {self.p2.score}\n")
+            print(f"({self.p_2.name}) Total score : {self.p_2.score}\n")
 
     def player_1_turn(self):
         """Returns if current player is Player 1."""
@@ -145,35 +144,35 @@ class Game:
 
     def score_below_100(self):
         """Checks if score is under 100"""
-        if self.p1.score < 100 and self.p2.score < 100:
+        if self.p_1.score < 100 and self.p_2.score < 100:
             return True
-        else:
-            return False
+
+        return False
 
     def get_winner(self):
         """Return the name of the winner player."""
-        if self.p1.score >= 100:
-            return self.p1.name
-        else:
-            return self.p2.name
+        if self.p_1.score >= 100:
+            return self.p_1.name
+
+        return self.p_2.name
 
     def change_player_name(self):
         """Changed the name of the chosen player."""
-        if self.p1 and self.p2:
+        if self.p_1 and self.p_2:
             if self.number_of_players == 1:
-                self.p1.updateName()
+                self.p_1.update_name()
             else:
                 plyr = int(input("Choose player (1/2): "))
                 if plyr == 1:
-                    self.p1.updateName()
+                    self.p_1.update_name()
                 else:
-                    self.p2.updateName()
+                    self.p_2.update_name()
         else:
             print("You haven't started the game yet!\n")
 
     def change_game_level(self):
         """Changes the games level of intelligence"""
-        if self.p1 and self.p2:
+        if self.p_1 and self.p_2:
             if self.number_of_players == 1:
                 print(f"Current level is {self.level_of_intelligence}.")
                 val = input("Do you wish to change the  level? (y/n): ")
@@ -182,7 +181,7 @@ class Game:
                         input("\nChoose level of difficulty (1/2): ")
                     )
                     print(
-                        f"Level of difficulty successfully changed to {self.level_of_intelligence}.\n"
+                        f"Level successfully changed to {self.level_of_intelligence}.\n"
                     )
             else:
                 print(
@@ -193,18 +192,18 @@ class Game:
 
     def get_highscore(self):
         """Represents the highscore of the current game."""
-        if self.p1 and self.p2:
+        if self.p_1 and self.p_2:
             h_score = highscore.HighScore()
-            players = [self.p1.name, self.p2.name]
+            players = [self.p_1.name, self.p_2.name]
             current_scores = [self.player1_score, self.player2_score]
-            total_scores = [self.p1.score, self.p2.score]
+            total_scores = [self.p_1.score, self.p_2.score]
             h_score.get_highscore(players, current_scores, total_scores)
         else:
             print("You haven't started the game yet!\n")
 
     def cheat(self):
         """Activates cheat"""
-        if self.p1 and self.p2:
+        if self.p_1 and self.p_2:
             if self.number_of_players == 2:
                 print(
                     "Cheating is only available when you're playing against a computer.\n"

@@ -21,17 +21,17 @@ class TestGame(unittest.TestCase):
         self.player_turn = 0
         self.level_of_intelligence = 1
         self.is_cheating = False
-        self.p1 = Player.name = "Ahmed"
-        self.p2 = Player.name = "Cuz"
+        self.p_1 = Player.name = "Ahmed"
+        self.p_2 = Player.name = "Cuz"
 
     def test_start(self):
         # Test the number of player must bee 1 or 2
         self.assertTrue(self.number_of_players == 2 or self.number_of_players == 1)
         if self.number_of_players == 1:
-            self.p2 = "Computer"
-            self.assertTrue(self.p2 == "Computer")
+            self.p_2 = "Computer"
+            self.assertTrue(self.p_2 == "Computer")
         else:
-            self.assertTrue(self.p1 == "Ahmed" and self.p2 == "Cuz")
+            self.assertTrue(self.p_1 == "Ahmed" and self.p_2 == "Cuz")
 
     def test_roll(self):
         # check the roll function
