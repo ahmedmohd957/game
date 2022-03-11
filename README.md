@@ -43,5 +43,5 @@ make doc
 # Generate UML diagrams from code
 
 ```bash
-make uml
+make pyreverse
 ```
