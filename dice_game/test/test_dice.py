@@ -1,5 +1,8 @@
 import unittest
 from unittest.mock import patch
+import sys
+
+sys.path.append("dice_game")
 import dice
 
 

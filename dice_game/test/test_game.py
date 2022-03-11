@@ -1,4 +1,7 @@
 import unittest
+import sys
+
+sys.path.append("dice_game")
 from game import Game
 from player import Player
 from dice import Dice
