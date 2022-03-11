@@ -6,13 +6,13 @@ import highscore
 
 class Game:
 
+    # class variable shared by all instances
     number_of_players = 1
     player1_score = 0
     player2_score = 0
     player_turn = 0
     level_of_intelligence = 1
     is_cheating = False
-
     p1 = None
     p2 = None
 
@@ -85,16 +85,13 @@ class Game:
 
     def computer(self, roll):
         if roll != 1:
-            hold = ["y", "n", "n"]
-            index = 0
-            
             intel = intelligence.Intelligence()
             if self.level_of_intelligence == 1:
-                index = intel.level_1()
+                hold_or_cont = intel.level_1()
             elif self.level_of_intelligence == 2:
-                index = intel.level_2()
+                hold_or_cont = intel.level_2()
             
-            if hold[index] == "y":
+            if hold_or_cont == "y":
                 print('Computer chose to "hold"')
                 self.hold(roll)
             else:
