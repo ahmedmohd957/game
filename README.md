@@ -1,7 +1,3 @@
-# game
-
-=======
-
 # Pig Dice Game
 
 This is a Pig (dice game) project.
