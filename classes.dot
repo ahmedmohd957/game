@@ -1,0 +1,18 @@
+digraph "classes" {
+rankdir=BT
+charset="utf-8"
+"dice.Dice" [color="black", fontcolor="black", label="{Dice|\l|roll_dice()\l}", shape="record", style="solid"];
+"game.Game" [color="black", fontcolor="black", label="{Game|is_cheating : bool\lis_cheating : bool\llevel_of_intelligence : int\llevel_of_intelligence : int\lnumber_of_players : int\lnumber_of_players : int\lp1\lp1 : NoneType\lp2\lp2 : NoneType\lplayer1_score : int\lplayer1_score : int\lplayer2_score : int\lplayer2_score : int\lplayer_turn : int\lplayer_turn : int\l|change_game_level()\lchange_player_name()\lcheat()\lcomputer(roll)\lcomputer_turn()\lget_highscore()\lget_winner()\lhold(roll)\lone_player()\lplayer_1_turn()\lplayer_2_turn()\lroll()\lscore_below_100()\lstart()\l}", shape="record", style="solid"];
+"highscore.HighScore" [color="black", fontcolor="black", label="{HighScore|\l|get_highScore(players, current_scores, total_scores)\l}", shape="record", style="solid"];
+"intelligence.Intelligence" [color="black", fontcolor="black", label="{Intelligence|\l|level_1()\llevel_2()\l}", shape="record", style="solid"];
+"player.Player" [color="black", fontcolor="black", label="{Player|name : str\lname : str\lscore\lscore : int\l|setName(selected_plyr)\lupdateName()\l}", shape="record", style="solid"];
+"shell.Shell" [color="black", fontcolor="black", label="{Shell|game\lintro : str\lprompt : str\l|do_change_level(_)\ldo_change_name(_)\ldo_cheat(_)\ldo_exit(_)\ldo_q(arg)\ldo_quit(arg)\ldo_roll(_)\ldo_score(_)\ldo_start(_)\l}", shape="record", style="solid"];
+"test_dice.TestDice" [color="black", fontcolor="black", label="{TestDice|\l|test_init_default_object()\ltest_roll_dice(mock_random)\l}", shape="record", style="solid"];
+"test_game.TestGame" [color="black", fontcolor="black", label="{TestGame|is_cheating : bool\llevel_of_intelligence : int\lnumber_of_players : int\lp1 : str\lp2 : str\lplayer1_score : int\lplayer2_score : int\lplayer_turn : int\l|setUp()\ltest_init_default_object()\ltest_roll()\ltest_start()\l}", shape="record", style="solid"];
+"test_intelligence.TestIntelligence" [color="black", fontcolor="black", label="{TestIntelligence|\l|test_init_default_object()\ltest_level_1(mock_random)\l}", shape="record", style="solid"];
+"test_player.TestPlayer" [color="black", fontcolor="black", label="{TestPlayer|name : str\lupdated_name : str\l|setUp()\ltest_Player_name()\ltest_Player_name_update()\ltest_init_default_object()\l}", shape="record", style="solid"];
+"test_highscore.testHighScore" [color="black", fontcolor="black", label="{testHighScore|test : NoneType\l|setUp()\ltest_init_default_object()\l}", shape="record", style="solid"];
+"game.Game" -> "shell.Shell" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="game", style="solid"];
+"player.Player" -> "game.Game" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="p1", style="solid"];
+"player.Player" -> "game.Game" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="p2", style="solid"];
+}

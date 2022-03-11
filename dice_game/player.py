@@ -1,3 +1,6 @@
+"""This class represents the player."""
+
+
 class Player:
 
     name = ""
