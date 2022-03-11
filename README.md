@@ -1,6 +1,7 @@
-<<<<<<< HEAD
 # game
+
 =======
+
 # Pig Dice Game
 
 This is a Pig (dice game) project.
@@ -36,4 +37,3 @@ Install the PIP packages that are dependencies to the project and/or the develop
 ```bash
 make install
 ```
->>>>>>> a0134df7b2197eea2be851b0f21e419bb0cedb7a
