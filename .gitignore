@@ -3,4 +3,4 @@
 __pycache__
 htmlcov/
 *.pyc
-src/*/doc
+doc/
