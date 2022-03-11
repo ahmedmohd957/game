@@ -33,3 +33,15 @@ Install the PIP packages that are dependencies to the project and/or the develop
 ```bash
 make install
 ```
+
+# Generate documentation from comments
+
+```bash
+make doc
+```
+
+# Generate UML diagrams from code
+
+```bash
+make uml
+```
