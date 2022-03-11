@@ -1,3 +1,6 @@
 {
-  "python.analysis.extraPaths": ["./dice_game"]
+  "python.analysis.extraPaths": [
+    "./dice_game"
+  ],
+  "python.formatting.provider": "black"
 }

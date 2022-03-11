@@ -10,7 +10,7 @@ class TestIntelligence(unittest.TestCase):
         message = "given object is not instance of intelligence class."
         self.assertIsInstance(object, Intelligence, message)
 
-    @unittest.mock.patch('intelligence.random')
+    @unittest.mock.patch("intelligence.random")
     def test_level_1(self, mock_random):
         # check the level1 function return a number betwen 0 to 2
         Intelligence.level_1(self)
