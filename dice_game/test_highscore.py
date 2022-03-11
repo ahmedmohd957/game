@@ -11,7 +11,7 @@ class testHighScore(unittest.TestCase):
 
     def setUp(self):
         # test to print the score table
-        self.test = HighScore.get_highScore(self, ["Cuz", "Ahmed"], [9, 8], [20, 19])
+        self.test = HighScore.get_highscore(self, ["Cuz", "Ahmed"], [9, 8], [20, 19])
 
 
 if __name__ == "__main__":
