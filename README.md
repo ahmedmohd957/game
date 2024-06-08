@@ -4,7 +4,7 @@ This is a Pig (dice game) project.
 
 # Authors
 
-Ahmed Mohammed Ahmed and Murwan Eisa.
+Ahmed Mohammed and Murwan Eisa.
 
 # About the Game
 
